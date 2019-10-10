@@ -1,31 +1,119 @@
-Role Name
+proxysql
 =========
 
-A brief description of the role goes here.
+Currently this role is compatible with ProxySQL v2
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Ansible 2.5 minimum
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+The variables that can be passed to this role. For all variables, take
+a look at [defaults/main.yml](defaults/main.yml).
 
-Dependencies
-------------
+```yaml
+# defaults file for proxySQL
+proxysql_cnf_path: '/etc'
+proxysql_template: 'proxysql.cnf.j2'
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+# admin variables
+proxysql_admin_credentials: 'admin:admin'
+proxysql_admin_ifaces: '0.0.0.0:6032'
+proxysql_admin_refresh_interval: 2000
+
+# mysql variables
+proxysql_mysql_threads: 4
+proxysql_mysql_max_connections: 2048
+proxysql_mysql_default_query_delay: 0
+proxysql_mysql_default_query_timeout: 36000000
+proxysql_mysql_have_compress: true
+proxysql_mysql_poll_timeout: 2000
+proxysql_mysql_interfaces: '0.0.0.0:6033' #0.0.0.0:6033;/tmp/proxysql.sock 
+proxysql_mysql_default_schema: 'information_schema'
+proxysql_mysql_stacksize: 1048576 
+proxysql_mysql_server_version: '5.5.30'
+proxysql_mysql_connect_timeout_server: 3000
+proxysql_mysql_monitor_username: 'monitor'
+proxysql_mysql_monitor_password: 'monitor'
+proxysql_mysql_monitor_history: 600000
+proxysql_mysql_monitor_connect_interval: 60000
+proxysql_mysql_monitor_ping_interval: 10000
+proxysql_mysql_monitor_read_only_interval: 1500
+proxysql_mysql_monitor_read_only_timeout: 500
+proxysql_mysql_ping_interval_server_msec: 120000
+proxysql_mysql_ping_timeout_server: 500
+proxysql_mysql_commands_stats: true
+proxysql_mysql_sessions_sort: true
+proxysql_mysql_connect_retries_on_failure: 10
+
+# define all MySQL servers
+proxysql_mysql_servers: []
+  # - address: "127.0.0.1" # no default, required . If port is 0 , address is interpred as a Unix Socket Domain
+  #	  port: 3306           # no default, required . If port is 0 , address is interpred as a Unix Socket Domain
+  #	  hostgroup: 0	        # no default, required
+  #	  status: "ONLINE"     # default: ONLINE
+  #	  weight: 1            # default: 1
+  #	  compression: 0       # default: 0
+  #   max_replication_lag: 10  # default 0 . If greater than 0 and replication lag passes such threshold, the server is shunned
+  #   max_connections: 200
+
+# defines all the MySQL users
+proxysql_mysql_users: []
+  # - username: "username" # no default , required
+  #   password: "password" # default: ''
+  #		default_hostgroup: 0 # default: 0
+  #		active: 1            # default: 1
+  #		max_connections: 1000
+  #		default_schema: "test"
+
+# defines MySQL Query Rules
+proxysql_mysql_query_rules: []
+  # -	rule_id: 1
+  #		active: 1
+  #		match_pattern: "^SELECT .* FOR UPDATE$"
+  #		destination_hostgroup: 0
+  #		apply: 1
+  
+  #	-	rule_id: 2
+  #		active: 1
+  #		match_pattern: "^SELECT"
+  #		destination_hostgroup: 1
+  #		apply: 1
+
+
+proxysql_scheduler: []
+  # - id: 1
+  #   active: 0
+  #   interval_ms: 10000
+  #   filename: "/var/lib/proxysql/proxysql_galera_checker.sh"
+  #   args:
+  #     - "0"
+  #     - "1"
+  #     - "0"
+  #     - "1"
+  #     - "/var/lib/proxysql/proxysql_galera_checker.log"
+
+proxysql_mysql_replication_hostgroups: []
+# - writer_hostgroup: 30
+#   reader_hostgroup: 40
+#   comment: "test repl 1"
+#                
+# - writer_hostgroup: 50
+#   reader_hostgroup: 60
+#   comment: "test repl 2"
+```
 
 Example Playbook
 ----------------
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: servers
+    - hosts: all
       roles:
-         - { role: username.rolename, x: 42 }
+         - proxysql
 
 License
 -------
@@ -35,4 +123,4 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Julien Bunel (julien@laratuts.fr)
