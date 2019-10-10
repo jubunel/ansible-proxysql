@@ -1,0 +1,12 @@
+---
+# handlers file for proxySQL
+
+- name: Restart ProxySQL
+  systemd:
+    name: proxysql
+    state: restarted
+
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes

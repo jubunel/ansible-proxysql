@@ -1,0 +1,183 @@
+#
+# {{ ansible_managed }}
+#
+
+#file proxysql.cfg
+
+########################################################################################
+# This config file is parsed using libconfig , and its grammar is described in:        
+# http://www.hyperrealm.com/libconfig/libconfig_manual.html#Configuration-File-Grammar 
+# Grammar is also copied at the end of this file                                       
+########################################################################################
+
+########################################################################################
+# IMPORTANT INFORMATION REGARDING THIS CONFIGURATION FILE:                             
+########################################################################################
+# On startup, ProxySQL reads its config file (if present) to determine its datadir. 
+# What happens next depends on if the database file (disk) is present in the defined
+# datadir (i.e. "/var/lib/proxysql/proxysql.db").
+#
+# If the database file is found, ProxySQL initializes its in-memory configuration from 
+# the persisted on-disk database. So, disk configuration gets loaded into memory and 
+# then propagated towards the runtime configuration. 
+#
+# If the database file is not found and a config file exists, the config file is parsed 
+# and its content is loaded into the in-memory database, to then be both saved on-disk 
+# database and loaded at runtime.
+#
+# IMPORTANT: If a database file is found, the config file is NOT parsed. In this case
+#            ProxySQL initializes its in-memory configuration from the persisted on-disk
+#            database ONLY. In other words, the configuration found in the proxysql.cnf
+#            file is only used to initial the on-disk database read on the first startup.
+#
+# In order to FORCE a re-initialise of the on-disk database from the configuration file 
+# the ProxySQL service should be started with "service proxysql initial".
+#
+########################################################################################
+
+datadir="/var/lib/proxysql"
+errorlog="/var/lib/proxysql/proxysql.log"
+
+admin_variables=
+{
+    admin_credentials="{{ proxysql_admin_credentials }}"
+    mysql_ifaces="{{ proxysql_admin_ifaces }}"
+    {% if proxysql_admin_refresh_interval is defined %}
+        refresh_interval = {{ proxysql_admin_refresh_interval }}
+    {% endif %}
+    {% if proxysql_admin_debug is defined %}
+        debug = {{ proxysql_admin_debug }}
+    {% endif %}
+}
+
+mysql_variables=
+{
+    threads={{ proxysql_mysql_threads }}
+    max_connections={{ proxysql_mysql_max_connections }}
+    default_query_delay={{ proxysql_mysql_default_query_delay }}
+    default_query_timeout={{ proxysql_mysql_default_query_timeout }}
+    have_compress={{ proxysql_mysql_have_compress }}
+    poll_timeout={{ proxysql_mysql_poll_timeout }}
+    interfaces="{{ proxysql_mysql_interfaces }}" #	interfaces="0.0.0.0:6033;/tmp/proxysql.sock"
+    default_schema="{{ proxysql_mysql_default_schema }}"
+    stacksize={{ proxysql_mysql_stacksize }}
+    server_version="{{ proxysql_mysql_server_version }}"
+    connect_timeout_server={{ proxysql_mysql_connect_timeout_server }}
+    monitor_username="{{ proxysql_mysql_monitor_username }}"
+    monitor_password="{{ proxysql_mysql_monitor_password }}"
+    monitor_history={{ proxysql_mysql_monitor_history }}
+    monitor_connect_interval={{ proxysql_mysql_monitor_connect_interval }}
+    monitor_ping_interval={{ proxysql_mysql_monitor_ping_interval }}
+    monitor_read_only_interval={{ proxysql_mysql_monitor_read_only_interval }}
+    monitor_read_only_timeout={{ proxysql_mysql_monitor_read_only_timeout }}
+    ping_interval_server_msec={{ proxysql_mysql_ping_interval_server_msec }}
+    ping_timeout_server={{ proxysql_mysql_ping_timeout_server }}
+    commands_stats={{ proxysql_mysql_commands_stats }}
+    sessions_sort={{ proxysql_mysql_sessions_sort }}
+    connect_retries_on_failure={{ proxysql_mysql_connect_retries_on_failure }}
+}
+
+# defines all the MySQL servers
+mysql_servers =
+(
+    {% for mysql_server in proxysql_mysql_servers %}
+    {
+        address = "{{ mysql_server.address }}" # no default, required . If port is 0 , address is interpred as a Unix Socket Domain
+        port = {{ mysql_server.port }} # no default, required . If port is 0 , address is interpred as a Unix Socket Domain
+        hostgroup = {{ mysql_server.hostgroup }} # no default, required
+        {% if mysql_server.status is defined %}
+        status = "{{ mysql_server.status }}" # default: ONLINE
+        {% endif %}
+        {% if mysql_server.weight is defined %}
+        weight = {{ mysql_server.weight }} # default: 1
+        {% endif %}
+        {% if mysql_server.compression is defined %}
+        compression = {{ mysql_server.compression }} # default: 0
+        {% endif %}
+        {%if mysql_server.max_replication_lag is defined %}
+        max_replication_lag = {{ mysql_server.max_replication_lag }} # default 0 - If greater than 0 and replication lag passes such threshold, the server is shunned
+        {% endif %}
+        {% if mysql_server.max_connections is defined %}
+        max_connections = {{ mysql_server.max_connections }}
+        {% endif %}
+    }
+    {%- if not loop.last -%}
+    ,
+    {% endif %}
+    {% endfor %}
+)
+
+# defines all the MySQL users
+mysql_users:
+(
+    {% for mysql_user in proxysql_mysql_users %}
+    {
+        username = "{{ mysql_user.username }}"
+        password = "{{ mysql_user.password }}"
+        {% if mysql_user.default_hostgroup is defined %}
+        default_hostgroup = {{ mysql_user.default_hostgroup }} # default: 0
+        {% endif %}
+        {% if mysql_user.active is defined %}
+        active = {{ mysql_user.active }} # default: 1
+        {% endif %}
+        {% if mysql_user.max_connections is defined %}
+        max_connections = {{ mysql_user.max_connections }}
+        {% endif %}
+        {% if mysql_user.default_schema is defined %}
+        default_schema = "{{ mysql_user.default_schema }}"
+        {% endif %}
+    }
+    {%- if not loop.last -%}
+    ,
+    {% endif %}
+    {% endfor %}
+)
+
+#defines MySQL Query Rules
+mysql_query_rules:
+(
+    {% for mysql_query_rule in proxysql_mysql_query_rules %}
+    {
+        rule_id = {{ mysql_query_rule.rule_id }}
+        active = {{ mysql_query_rule.active }}
+        match_pattern = "{{ mysql_query_rule.match_pattern }}"
+        destination_hostgroup = {{ mysql_query_rule.destination_hostgroup }}
+        apply = {{ mysql_query_rule.apply }}
+    }
+    {%- if not loop.last -%}
+    ,
+    {% endif %}
+    {% endfor %}
+)
+
+scheduler=
+(
+    {%- for scheduler in proxysql_scheduler -%}
+    {
+        id = {{ scheduler.id }}
+        active = {{ scheduler.active }}
+        interval_ms = {{ scheduler.interval_ms }}
+        filename = "{{ scheduler.filename }}"
+        {%- for arg in scheduler.args -%}
+            arg{{ loop.index }} = "{{ arg }}"
+        {% endfor %}
+    }
+    {%- if not loop.last -%}
+    ,
+    {% endif %}
+    {% endfor %}
+)
+
+mysql_replication_hostgroups=
+(
+    {% for replication_hostgroup in proxysql_mysql_replication_hostgroups %}
+    {
+        writer_hostgroup = {{ replication_hostgroup.writer_hostgroup }}
+        reader_hostgroup = {{ replication_hostgroup.reader_hostgroup }}
+        comment = "{{ replication_hostgroup.comment }}"
+    }
+    {%- if not loop.last -%}
+    ,
+    {% endif %}
+    {% endfor %}
+)
