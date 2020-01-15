@@ -88,3 +88,10 @@ proxysql_mysql_replication_hostgroups: []
 # - writer_hostgroup: 50
 #   reader_hostgroup: 60
 #   comment: "test repl 2"
+#
+proxysql_mysql_galera_hostgroups: []
+# - writer_hostgroup: 70
+#   backup_writer_hostgroup: 71
+#   reader_hostgroup: 80
+#   offline_hostgroup: 90
+#   comment: "galera cluster 1"
