@@ -104,6 +104,19 @@ proxysql_mysql_replication_hostgroups: []
 # - writer_hostgroup: 50
 #   reader_hostgroup: 60
 #   comment: "test repl 2"
+
+proxysql_mysql_galera_hostgroups: []
+# - writer_hostgroup: 60
+#   backup_writer_hostgroup: 61
+#   reader_hostgroup: 70
+#   offline_hostgroup: 79
+#   comment: "Galera cluster 1"
+#                
+# - writer_hostgroup: 80
+#   backup_writer_hostgroup: 81
+#   reader_hostgroup: 90
+#   offline_hostgroup: 99
+#   comment: "Galera cluster 2"
 ```
 
 Example Playbook
