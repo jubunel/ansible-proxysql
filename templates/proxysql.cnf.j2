@@ -181,3 +181,21 @@ mysql_replication_hostgroups=
     {% endif %}
     {% endfor %}
 )
+
+
+mysql_galera_hostgroups=
+(
+    {% for galera_hostgroup in proxysql_mysql_galera_hostgroups %}
+    {
+        writer_hostgroup = {{ galera_hostgroup.writer_hostgroup }}
+        backup_writer_hostgroup = {{ galera_hostgroup.backup_writer_hostgroup }}
+        reader_hostgroup = {{ galera_hostgroup.reader_hostgroup }}
+        offline_hostgroup = {{ galera_hostgroup.offline_hostgroup }}
+        max_writers = {{ galera_hostgroup.max_writers if galera_hostgroup.max_writers is defined else 1 }}
+        comment = "{{ galera_hostgroup.comment }}"
+    }
+    {%- if not loop.last -%}
+    ,
+    {% endif %}
+    {% endfor %}
+)

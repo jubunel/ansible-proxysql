@@ -117,6 +117,8 @@ proxysql_mysql_galera_hostgroups: []
 #   reader_hostgroup: 90
 #   offline_hostgroup: 99
 #   comment: "Galera cluster 2"
+#
+# NOTE: Add your servers in the reader hostgroup, ProxySQL will take care of everything else.
 ```
 
 Example Playbook
