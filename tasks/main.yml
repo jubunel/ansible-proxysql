@@ -37,7 +37,9 @@
 
 
 - name: Install ProxySQL
-  apt: name=proxysql state=present
+  apt: 
+    name: proxysql
+    state: latest
 
 
 - name: Recursively change ownership of /var/lib/proxysql folder
