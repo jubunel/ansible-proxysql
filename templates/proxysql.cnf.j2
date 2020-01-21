@@ -111,6 +111,7 @@ mysql_servers =
 mysql_users:
 (
     {% for mysql_user in proxysql_mysql_users %}
+    {% if mysql_user.username != proxysql_mysql_monitor_username %}
     {
         username = "{{ mysql_user.username }}"
         password = "{{ mysql_user.password }}"
@@ -129,6 +130,7 @@ mysql_users:
     }
     {%- if not loop.last -%}
     ,
+    {% endif %}
     {% endif %}
     {% endfor %}
 )
