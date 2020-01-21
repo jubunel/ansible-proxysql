@@ -192,8 +192,6 @@ mysql_galera_hostgroups=
         reader_hostgroup = {{ galera_hostgroup.reader_hostgroup }}
         offline_hostgroup = {{ galera_hostgroup.offline_hostgroup }}
         max_writers = {{ galera_hostgroup.max_writers if galera_hostgroup.max_writers is defined else 1 }}
-        writer_is_also_reader = {{ galera_hostgroup.writer_is_also_reader if galera_hostgroup.writer_is_also_reader else 1 }}
-        max_transactions_behind = {{ galera_hostgroup.max_transactions_behind if galera_hostgroup.max_transactions_behind else 0 }}
         comment = "{{ galera_hostgroup.comment }}"
     }
     {%- if not loop.last -%}
