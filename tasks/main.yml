@@ -36,9 +36,9 @@
   apt_repository: repo='deb https://repo.proxysql.com/ProxySQL/proxysql-2.0.x/{{ ansible_distribution_release }}/ ./' state=present
 
 
-- name: Install ProxySQL
+- name: Install, upgrade or downgrade ProxySQL
   apt: 
-    name: proxysql
+    name: "proxysql={{ proxysql_apt_version }}"
     state: latest
 
 
