@@ -24,7 +24,7 @@
     state: directory
     owner: proxysql
     group: proxysql
-
+PM 
 
 - name: APT | Install ProxySQL key
   apt_key:
@@ -39,7 +39,7 @@
 - name: Install, upgrade or downgrade ProxySQL
   apt: 
     name: "proxysql={{ proxysql_apt_version }}"
-    state: latest
+    state: "{{ 'latest' if proxysql_apt_version[-1] == '*' else 'present' }}"
 
 
 - name: Recursively change ownership of /var/lib/proxysql folder
