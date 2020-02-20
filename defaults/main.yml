@@ -3,9 +3,13 @@
 proxysql_cnf_path: '/etc'
 proxysql_template: 'proxysql.cnf.j2'
 
-# admin variables
-proxysql_admin_credentials: 'admin:admin'
-proxysql_admin_ifaces: '0.0.0.0:6032'
+# admin credentials
+proxysql_admin_username: 'admin'
+proxysql_admin_password: 'admin'
+
+# admin interface
+proxysql_admin_bind_address: '0.0.0.0'
+proxysql_admin_bind_port: 6032
 proxysql_admin_refresh_interval: 2000
 
 # mysql variables
@@ -95,3 +99,11 @@ proxysql_mysql_galera_hostgroups: []
 #   reader_hostgroup: 80
 #   offline_hostgroup: 90
 #   comment: "galera cluster 1"
+
+# Install MySQL client and place /root/.my.cnf for easy ProxySQL administration
+proxysql_cli_install_config: True
+# Install a MySQL client to be able to login to ProxySQL
+proxysql_cli_install_client: True
+# When installing a client, which flavor are we installing?
+proxysql_cli_client_package: "mariadb-client"
+

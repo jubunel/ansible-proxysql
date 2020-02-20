@@ -40,8 +40,8 @@ errorlog="/var/lib/proxysql/proxysql.log"
 
 admin_variables=
 {
-    admin_credentials="{{ proxysql_admin_credentials }}"
-    mysql_ifaces="{{ proxysql_admin_ifaces }}"
+    admin_credentials="{{ proxysql_admin_username }}:{{ proxysql_admin_password }}"
+    mysql_ifaces="{{ proxysql_admin_bind_address }}:{{ proxysql_admin_bind_port }}"
     {% if proxysql_admin_refresh_interval is defined %}
         refresh_interval = {{ proxysql_admin_refresh_interval }}
     {% endif %}
