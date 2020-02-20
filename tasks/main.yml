@@ -24,7 +24,7 @@
     state: directory
     owner: proxysql
     group: proxysql
-
+PM 
 
 - name: APT | Install ProxySQL key
   apt_key:
