@@ -40,7 +40,7 @@
   apt: 
     name: "proxysql={{ proxysql_apt_version }}"
     state: "{{ 'latest' if proxysql_apt_version[-1] == '*' else 'present' }}"
-    dpkg_options: force-confdef,force-confold,force-downgrade
+    force: yes # Allow downgrades
 
 
 - name: Recursively change ownership of /var/lib/proxysql folder
