@@ -36,10 +36,10 @@
   apt_repository: repo='deb https://repo.proxysql.com/ProxySQL/proxysql-2.0.x/{{ ansible_distribution_release }}/ ./' state=present
 
 
-- name: Install ProxySQL
+- name: Install, upgrade or downgrade ProxySQL
   apt: 
-    name: proxysql
-    state: latest
+    name: "proxysql={{ proxysql_apt_version }}"
+    state: "{{ 'latest' if proxysql_apt_version[-1] == '*' else 'present' }}"
 
 
 - name: Recursively change ownership of /var/lib/proxysql folder
