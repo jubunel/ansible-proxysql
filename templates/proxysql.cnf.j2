@@ -142,9 +142,91 @@ mysql_query_rules:
     {
         rule_id = {{ mysql_query_rule.rule_id }}
         active = {{ mysql_query_rule.active }}
+        {% if mysql_query_rule.username is defined %}
+        username = "{{ mysql_query_rule.username }}"
+        {% endif %}
+        {% if mysql_query_rule.schemaname is defined %}
+        schemaname = "{{ mysql_query_rule.schemaname }}"
+        {% endif %}
+        {% if mysql_query_rule.flagIN is defined %}
+        flagIN = "{{ mysql_query_rule.flagIN }}" # default 0
+        {% endif %}
+        {% if mysql_query_rule.flagOUT is defined %}
+        flagOUT = "{{ mysql_query_rule.flagOUT }}"
+        {% endif %}
+        {% if mysql_query_rule.client_addr is defined %}
+        client_addr = "{{ mysql_query_rule.client_addr }}"
+        {% endif %}
+        {% if mysql_query_rule.proxy_addr is defined %}
+        proxy_addr = "{{ mysql_query_rule.proxy_addr }}"
+        {% endif %}
+        {% if mysql_query_rule.proxy_port is defined %}
+        proxy_port = "{{ mysql_query_rule.proxy_port }}"
+        {% endif %}
+        {% if mysql_query_rule.match_digest is defined %}
+        match_digest = "{{ mysql_query_rule.match_digest }}"
+        {% endif %}
+        {% if mysql_query_rule.match_pattern is defined %}
         match_pattern = "{{ mysql_query_rule.match_pattern }}"
-        destination_hostgroup = {{ mysql_query_rule.destination_hostgroup }}
+        {% endif %}
+        {% if mysql_query_rule.negate_match_pattern is defined %}
+        negate_match_pattern = "{{ mysql_query_rule.negate_match_pattern }}" # default 0
+        {% endif %}
+        {% if mysql_query_rule.re_modifiers is defined %}
+        re_modifiers = "{{ mysql_query_rule.re_modifiers }}" # default CASELESS
+        {% endif %}
+        {% if mysql_query_rule.destination_hostgroup is defined %}
+        destination_hostgroup = "{{ mysql_query_rule.destination_hostgroup }}"
+        {% endif %}
+        {% if mysql_query_rule.cache_ttl is defined %}
+        cache_ttl = "{{ mysql_query_rule.cache_ttl }}"
+        {% endif %}
+        {% if mysql_query_rule.cache_empty_result is defined %}
+        cache_empty_result = "{{ mysql_query_rule.cache_empty_result }}"
+        {% endif %}
+        {% if mysql_query_rule.cache_timeout is defined %}
+        cache_timeout = "{{ mysql_query_rule.cache_timeout }}"
+        {% endif %}
+        {% if mysql_query_rule.timeout is defined %}
+        timeout = "{{ mysql_query_rule.timeout }}"
+        {% endif %}
+        {% if mysql_query_rule.retries is defined %}
+        retries = "{{ mysql_query_rule.retries }}"
+        {% endif %}
+        {% if mysql_query_rule.delay is defined %}
+        delay = "{{ mysql_query_rule.delay }}"
+        {% endif %}
+        {% if mysql_query_rule.next_query_flagIN is defined %}
+        next_query_flagIN = "{{ mysql_query_rule.next_query_flagIN }}"
+        {% endif %}
+        {% if mysql_query_rule.mirror_flagOUT is defined %}
+        mirror_flagOUT = "{{ mysql_query_rule.mirror_flagOUT }}"
+        {% endif %}
+        {% if mysql_query_rule.mirror_hostgroup is defined %}
+        mirror_hostgroup = "{{ mysql_query_rule.mirror_hostgroup }}"
+        {% endif %}
+        {% if mysql_query_rule.error_msg is defined %}
+        error_msg = "{{ mysql_query_rule.error_msg }}"
+        {% endif %}
+        {% if mysql_query_rule.OK_msg is defined %}
+        OK_msg = "{{ mysql_query_rule.OK_msg }}"
+        {% endif %}
+        {% if mysql_query_rule.sticky_conn is defined %}
+        sticky_conn = "{{ mysql_query_rule.sticky_conn }}"
+        {% endif %}
+        {% if mysql_query_rule.multiplex is defined %}
+        multiplex = "{{ mysql_query_rule.multiplex }}"
+        {% endif %}
+        {% if mysql_query_rule.gtid_from_hostgroup is defined %}
+        gtid_from_hostgroup = "{{ mysql_query_rule.gtid_from_hostgroup }}"
+        {% endif %}
+        {% if mysql_query_rule.log is defined %}
+        log = "{{ mysql_query_rule.log }}"
+        {% endif %}
         apply = {{ mysql_query_rule.apply }}
+        {% if mysql_query_rule.comment is defined %}
+        comment = "{{ mysql_query_rule.comment }}"
+        {% endif %}
     }
     {%- if not loop.last -%}
     ,
