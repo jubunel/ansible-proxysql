@@ -1,10 +1,3 @@
-- name: "Check parameters upgraded"
-  assert:
-    that: 
-     - "proxysql_admin_credentials is not defined"
-     - "proxysql_admin_ifaces is not defined"
-    fail_msg: "Please upgrade your group vars to the new style configuration"
-
 - name: "Install MySQL CLI client"
   package: 
     name: "{{ proxysql_cli_client_package }}"
