@@ -149,10 +149,10 @@ mysql_query_rules:
         schemaname = "{{ mysql_query_rule.schemaname }}"
         {% endif %}
         {% if mysql_query_rule.flagIN is defined %}
-        flagIN = "{{ mysql_query_rule.flagIN }}" # default 0
+        flagIN = {{ mysql_query_rule.flagIN | int }} # default 0
         {% endif %}
         {% if mysql_query_rule.flagOUT is defined %}
-        flagOUT = "{{ mysql_query_rule.flagOUT }}"
+        flagOUT = {{ mysql_query_rule.flagOUT | int }}
         {% endif %}
         {% if mysql_query_rule.client_addr is defined %}
         client_addr = "{{ mysql_query_rule.client_addr }}"
@@ -161,7 +161,7 @@ mysql_query_rules:
         proxy_addr = "{{ mysql_query_rule.proxy_addr }}"
         {% endif %}
         {% if mysql_query_rule.proxy_port is defined %}
-        proxy_port = "{{ mysql_query_rule.proxy_port }}"
+        proxy_port = {{ mysql_query_rule.proxy_porti | int }}
         {% endif %}
         {% if mysql_query_rule.match_digest is defined %}
         match_digest = "{{ mysql_query_rule.match_digest }}"
@@ -170,40 +170,40 @@ mysql_query_rules:
         match_pattern = "{{ mysql_query_rule.match_pattern }}"
         {% endif %}
         {% if mysql_query_rule.negate_match_pattern is defined %}
-        negate_match_pattern = "{{ mysql_query_rule.negate_match_pattern }}" # default 0
+        negate_match_pattern = {{ mysql_query_rule.negate_match_pattern | int }} # default 0
         {% endif %}
         {% if mysql_query_rule.re_modifiers is defined %}
         re_modifiers = "{{ mysql_query_rule.re_modifiers }}" # default CASELESS
         {% endif %}
         {% if mysql_query_rule.destination_hostgroup is defined %}
-        destination_hostgroup = "{{ mysql_query_rule.destination_hostgroup }}"
+        destination_hostgroup = {{ mysql_query_rule.destination_hostgroup | int }}
         {% endif %}
         {% if mysql_query_rule.cache_ttl is defined %}
-        cache_ttl = "{{ mysql_query_rule.cache_ttl }}"
+        cache_ttl = {{ mysql_query_rule.cache_ttl | int }}
         {% endif %}
         {% if mysql_query_rule.cache_empty_result is defined %}
-        cache_empty_result = "{{ mysql_query_rule.cache_empty_result }}"
+        cache_empty_result = {{ mysql_query_rule.cache_empty_result | int }}
         {% endif %}
         {% if mysql_query_rule.cache_timeout is defined %}
-        cache_timeout = "{{ mysql_query_rule.cache_timeout }}"
+        cache_timeout = {{ mysql_query_rule.cache_timeout | int }}
         {% endif %}
         {% if mysql_query_rule.timeout is defined %}
-        timeout = "{{ mysql_query_rule.timeout }}"
+        timeout = {{ mysql_query_rule.timeout | int }}
         {% endif %}
         {% if mysql_query_rule.retries is defined %}
-        retries = "{{ mysql_query_rule.retries }}"
+        retries = {{ mysql_query_rule.retries | int }}
         {% endif %}
         {% if mysql_query_rule.delay is defined %}
-        delay = "{{ mysql_query_rule.delay }}"
+        delay = {{ mysql_query_rule.delay | int }}
         {% endif %}
         {% if mysql_query_rule.next_query_flagIN is defined %}
-        next_query_flagIN = "{{ mysql_query_rule.next_query_flagIN }}"
+        next_query_flagIN = {{ mysql_query_rule.next_query_flagIN | int }}
         {% endif %}
         {% if mysql_query_rule.mirror_flagOUT is defined %}
-        mirror_flagOUT = "{{ mysql_query_rule.mirror_flagOUT }}"
+        mirror_flagOUT = {{ mysql_query_rule.mirror_flagOUT | int }}
         {% endif %}
         {% if mysql_query_rule.mirror_hostgroup is defined %}
-        mirror_hostgroup = "{{ mysql_query_rule.mirror_hostgroup }}"
+        mirror_hostgroup = {{ mysql_query_rule.mirror_hostgroup | int }}
         {% endif %}
         {% if mysql_query_rule.error_msg is defined %}
         error_msg = "{{ mysql_query_rule.error_msg }}"
@@ -212,18 +212,18 @@ mysql_query_rules:
         OK_msg = "{{ mysql_query_rule.OK_msg }}"
         {% endif %}
         {% if mysql_query_rule.sticky_conn is defined %}
-        sticky_conn = "{{ mysql_query_rule.sticky_conn }}"
+        sticky_conn = {{ mysql_query_rule.sticky_conn | int }}
         {% endif %}
         {% if mysql_query_rule.multiplex is defined %}
-        multiplex = "{{ mysql_query_rule.multiplex }}"
+        multiplex = {{ mysql_query_rule.multiplex | int }}
         {% endif %}
         {% if mysql_query_rule.gtid_from_hostgroup is defined %}
-        gtid_from_hostgroup = "{{ mysql_query_rule.gtid_from_hostgroup }}"
+        gtid_from_hostgroup = {{ mysql_query_rule.gtid_from_hostgroup | int }}
         {% endif %}
         {% if mysql_query_rule.log is defined %}
-        log = "{{ mysql_query_rule.log }}"
+        log = {{ mysql_query_rule.log | int }}
         {% endif %}
-        apply = {{ mysql_query_rule.apply }}
+        apply = {{ mysql_query_rule.apply | int }}
         {% if mysql_query_rule.comment is defined %}
         comment = "{{ mysql_query_rule.comment }}"
         {% endif %}
