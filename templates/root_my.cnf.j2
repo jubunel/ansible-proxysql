@@ -1,0 +1,6 @@
+[mysql]
+host={{ '127.0.0.1' if proxysql_admin_bind_address == '0.0.0.0' else proxysql_admin_bind_address }}
+port={{ proxysql_admin_bind_port }}
+user={{ proxysql_admin_username }}
+password={{ proxysql_admin_password }}
+

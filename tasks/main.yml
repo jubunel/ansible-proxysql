@@ -1,5 +1,9 @@
----
-### Installation
+- name: "Check parameters upgraded"
+  assert:
+    that: 
+     - "proxysql_admin_credentials is not defined"
+     - "proxysql_admin_ifaces is not defined"
+    fail_msg: "Please upgrade your group vars to the new style configuration"
 
 
 - name: Ensure lsb-release is installed.
@@ -36,10 +40,11 @@
   apt_repository: repo='deb https://repo.proxysql.com/ProxySQL/proxysql-2.0.x/{{ ansible_distribution_release }}/ ./' state=present
 
 
-- name: Install ProxySQL
+- name: Install, upgrade or downgrade ProxySQL
   apt: 
-    name: proxysql
-    state: latest
+    name: "proxysql={{ proxysql_apt_version }}"
+    state: "{{ 'latest' if proxysql_apt_version[-1] == '*' else 'present' }}"
+    force: yes # Allow downgrades
 
 
 - name: Recursively change ownership of /var/lib/proxysql folder
@@ -71,3 +76,7 @@
     path: /var/lib/proxysql/proxysql.db
     state: absent
   when: config.changed
+
+- name: "Installing CLI client and/or admin interface configuration"
+  import_tasks: admin-client.yml
+  when: proxysql_cli_install_client or proxysql_cli_install_config

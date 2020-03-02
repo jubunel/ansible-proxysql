@@ -1,0 +1,10 @@
+- name: "Install MySQL CLI client"
+  package: 
+    name: "{{ proxysql_cli_client_package }}"
+  when: proxysql_cli_install_client
+
+- name: "Write configuration file"
+  template:
+    src: "root_my.cnf.j2"
+    dest: "/root/.my.cnf"
+  when: proxysql_cli_install_config
