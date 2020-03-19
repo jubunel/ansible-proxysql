@@ -161,7 +161,10 @@ mysql_query_rules:
         proxy_addr = "{{ mysql_query_rule.proxy_addr }}"
         {% endif %}
         {% if mysql_query_rule.proxy_port is defined %}
-        proxy_port = {{ mysql_query_rule.proxy_porti | int }}
+        proxy_port = {{ mysql_query_rule.proxy_port | int }}
+        {% endif %}
+        {% if mysql_query_rule.digest is defined %}
+        digest = "{{ mysql_query_rule.digest }}"
         {% endif %}
         {% if mysql_query_rule.match_digest is defined %}
         match_digest = "{{ mysql_query_rule.match_digest }}"
