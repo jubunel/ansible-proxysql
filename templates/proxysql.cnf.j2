@@ -161,7 +161,10 @@ mysql_query_rules:
         proxy_addr = "{{ mysql_query_rule.proxy_addr }}"
         {% endif %}
         {% if mysql_query_rule.proxy_port is defined %}
-        proxy_port = {{ mysql_query_rule.proxy_porti | int }}
+        proxy_port = {{ mysql_query_rule.proxy_port | int }}
+        {% endif %}
+        {% if mysql_query_rule.digest is defined %}
+        digest = "{{ mysql_query_rule.digest }}"
         {% endif %}
         {% if mysql_query_rule.match_digest is defined %}
         match_digest = "{{ mysql_query_rule.match_digest }}"
@@ -171,6 +174,9 @@ mysql_query_rules:
         {% endif %}
         {% if mysql_query_rule.negate_match_pattern is defined %}
         negate_match_pattern = {{ mysql_query_rule.negate_match_pattern | int }} # default 0
+        {% endif %}
+        {% if mysql_query_rule.replace_pattern is defined %}
+        replace_pattern = {{ mysql_query_rule.replace_pattern }}
         {% endif %}
         {% if mysql_query_rule.re_modifiers is defined %}
         re_modifiers = "{{ mysql_query_rule.re_modifiers }}" # default CASELESS
