@@ -1,0 +1,6 @@
+[Unit]
+Description=ProxSQL health check servic
+
+[Service]
+ExecStart=-/usr/bin/proxysql_galera_health_check {{ item.writer_hostgroup }} {{ item.reader_hostgroup }} 
+StandardInput=socket

@@ -1,0 +1,9 @@
+[Unit]
+Description=ProxySQL health check socket
+
+[Socket]
+ListenStream={{ item.health_check_port }}
+Accept=yes
+
+[Install]
+WantedBy=sockets.target

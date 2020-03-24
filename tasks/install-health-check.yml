@@ -1,0 +1,26 @@
+- name: "Install systemd socket file"
+  template: 
+    src: "templates/systemd_health_check_socket.j2"
+    dest: "/etc/systemd/system/proxysql_check_{{ item.health_check_port | default(9200) }}.socket"
+    mode: 0644
+
+- name: "Install systemd service file"
+  template: 
+    src: "templates/systemd_health_check_service.j2"
+    dest: "/etc/systemd/system/proxysql_check_{{ item.health_check_port | default(9200) }}@.service"
+    mode: 0644
+
+- name: "Copy health check executable"
+  copy:
+    src: files/proxysql_galera_health_check.sh
+    dest: /usr/bin/proxysql_galera_health_check
+    mode: 0755
+
+- name: "Starting systemd service"
+  systemd:
+    name: "proxysql_check_{{ item.health_check_port | default(9200) }}.socket"
+    enabled: yes
+    daemon_reload: yes
+    state: started
+
+
