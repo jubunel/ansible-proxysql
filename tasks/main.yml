@@ -42,8 +42,8 @@
 
 - name: Install, upgrade or downgrade ProxySQL
   apt: 
-    name: "proxysql={{ proxysql_apt_version }}"
-    state: "{{ 'latest' if proxysql_apt_version[-1] == '*' else 'present' }}"
+    name: "proxysql{{ ('=' + proxysql_apt_version) if proxysql_apt_version|length > 0 }}"
+    state: "{{ 'latest' if proxysql_apt_version|length == 0 else 'present' }}"
     force: yes # Allow downgrades
 
 

@@ -1,5 +1,5 @@
 # Repository configuration
-proxysql_apt_version: '2.0.*'
+proxysql_apt_version: ''
 
 # defaults file for proxySQL
 proxysql_cnf_path: '/etc'
@@ -108,4 +108,3 @@ proxysql_cli_install_config: True
 proxysql_cli_install_client: True
 # When installing a client, which flavor are we installing?
 proxysql_cli_client_package: "mariadb-client"
-
