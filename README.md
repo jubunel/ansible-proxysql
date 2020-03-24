@@ -110,6 +110,9 @@ proxysql_mysql_galera_hostgroups: []
 #   backup_writer_hostgroup: 61
 #   reader_hostgroup: 70
 #   offline_hostgroup: 79
+#   health_check_enabled: True
+#   health_check_port: 9200
+#   health_check_type: galera
 #   comment: "Galera cluster 1"
 #                
 # - writer_hostgroup: 80
@@ -129,6 +132,12 @@ Including an example of how to use your role (for instance, with variables passe
     - hosts: all
       roles:
          - proxysql
+
+
+Health check
+----------------
+This role installs a HTTP health check for galera host groups. By default this runs on port 9200, if you configure multiple galera hostgroups with this role you need to specify a different port.
+Contributions to install health checks for other hostgroups are appreciated.
 
 License
 -------
