@@ -42,8 +42,8 @@
 
 - name: Install, upgrade or downgrade ProxySQL
   apt: 
-    name: "proxysql={{ proxysql_apt_version }}"
-    state: "{{ 'latest' if proxysql_apt_version[-1] == '*' else 'present' }}"
+    name: "proxysql{{ ('=' + proxysql_apt_version) if proxysql_apt_version|length > 0 }}"
+    state: "{{ 'latest' if proxysql_apt_version|length == 0 else 'present' }}"
     force: yes # Allow downgrades
 
 
@@ -80,3 +80,8 @@
 - name: "Installing CLI client and/or admin interface configuration"
   import_tasks: admin-client.yml
   when: proxysql_cli_install_client or proxysql_cli_install_config
+
+- name: "Installing health check on Galera Cluster nodes"
+  include_tasks: install-health-check.yml
+  when: proxysql_cli_install_client and proxysql_cli_install_config and proxysql_install_health_check
+  loop: "{{ proxysql_mysql_galera_hostgroups }}"
