@@ -176,7 +176,7 @@ mysql_query_rules:
         negate_match_pattern = {{ mysql_query_rule.negate_match_pattern | int }} # default 0
         {% endif %}
         {% if mysql_query_rule.replace_pattern is defined %}
-        replace_pattern = {{ mysql_query_rule.replace_pattern }}
+        replace_pattern = "{{ mysql_query_rule.replace_pattern }}"
         {% endif %}
         {% if mysql_query_rule.re_modifiers is defined %}
         re_modifiers = "{{ mysql_query_rule.re_modifiers }}" # default CASELESS
