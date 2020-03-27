@@ -2,7 +2,7 @@
 # handlers file for proxySQL
 
 - name: Restart ProxySQL
-  systemd:
+  service:
     name: proxysql
     state: restarted
 
@@ -10,3 +10,4 @@
 - name: Reload systemd
   systemd:
     daemon_reload: yes
+  ignore_errors: True  # Allow to fail on systems without systemd
