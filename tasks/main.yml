@@ -85,3 +85,13 @@
   include_tasks: install-health-check.yml
   when: proxysql_cli_install_client and proxysql_cli_install_config and proxysql_install_health_check
   loop: "{{ proxysql_mysql_galera_hostgroups }}"
+
+- name: "Install work-around for issue 1254"
+  cron:
+    cron_file: "ansible_1254_workaround"
+    minute: "46"
+    hour: "1,4,7,10,13,16,19,22"
+    user: "root"
+    job: '/usr/bin/mysql -e "LOAD MYSQL SERVERS TO RUNTIME"'
+    name: "load_servers_to_runtime"
+  when: proxysql_cli_install_config and proxysql_install_1254_workaround
