@@ -3,14 +3,6 @@
     name: "{{ proxysql_cli_client_package }}"
   when: proxysql_cli_install_client
 
-- name: "Install work-around for issue 1254"
-  cron:
-    cron_file: "ansible_1254_workaround"
-    minute: "1,16,31,46"
-    user: "root"
-    job: '/usr/bin/mysql -e "LOAD MYSQL SERVERS TO RUNTIME"'
-  when: proxysql_cli_install_config and proxysql_install_1254_workaround
-
 - name: "Write configuration file"
   template:
     src: "root_my.cnf.j2"
