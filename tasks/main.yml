@@ -93,4 +93,5 @@
     hour: "1,4,7,10,13,16,19,22"
     user: "root"
     job: '/usr/bin/mysql -e "LOAD MYSQL SERVERS TO RUNTIME"'
+    name: "load_servers_to_runtime"
   when: proxysql_cli_install_config and proxysql_install_1254_workaround
