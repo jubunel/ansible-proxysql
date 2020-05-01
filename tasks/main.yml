@@ -88,6 +88,6 @@
 
 - name: "Install work-around for issue 1254"
   template:
-    src: template/cron_ansible_1254_workaround.j2
+    src: templates/cron_ansible_1254_workaround.j2
     dest: /etc/cron.d/ansible_1254_workaround
   when: proxysql_cli_install_config and proxysql_install_1254_workaround
