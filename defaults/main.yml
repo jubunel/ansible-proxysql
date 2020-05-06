@@ -38,6 +38,7 @@ proxysql_mysql_ping_timeout_server: 500
 proxysql_mysql_commands_stats: true
 proxysql_mysql_sessions_sort: true
 proxysql_mysql_connect_retries_on_failure: 10
+proxysql_mysql_hostgroup_manager_verbose: 2
 
 # define all MySQL servers
 proxysql_mysql_servers: []
@@ -107,6 +108,9 @@ proxysql_mysql_galera_hostgroups:
 
 # Install MySQL client and place /root/.my.cnf for easy ProxySQL administration
 proxysql_cli_install_config: True
+# Install a cronjob that executes `LOAD MYSQL SERVERS INTO RUNTIME` every 15 minutes as a work-around for issue
+# https://github.com/sysown/proxysql/issues/1254
+proxysql_install_1254_workaround: True
 # Install a MySQL client to be able to login to ProxySQL
 proxysql_cli_install_client: True
 # When installing a client, which flavor are we installing?
