@@ -39,6 +39,7 @@ proxysql_mysql_commands_stats: true
 proxysql_mysql_sessions_sort: true
 proxysql_mysql_connect_retries_on_failure: 10
 proxysql_mysql_hostgroup_manager_verbose: 2
+proxysql_mysql_set_query_lock_on_hostgroup: False
 
 # define all MySQL servers
 proxysql_mysql_servers: []
