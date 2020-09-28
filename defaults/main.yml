@@ -30,6 +30,9 @@ proxysql_mysql_monitor_username: 'monitor'
 proxysql_mysql_monitor_password: 'monitor'
 proxysql_mysql_monitor_history: 600000
 proxysql_mysql_monitor_connect_interval: 60000
+proxysql_mysql_monitor_galera_healthcheck_timeout: 800
+proxysql_mysql_monitor_galera_healthcheck_max_timeout_count: 3
+proxysql_mysql_monitor_galera_healthcheck_interval: 5000
 proxysql_mysql_monitor_ping_interval: 10000
 proxysql_mysql_monitor_read_only_interval: 1500
 proxysql_mysql_monitor_read_only_timeout: 500
@@ -39,6 +42,7 @@ proxysql_mysql_commands_stats: true
 proxysql_mysql_sessions_sort: true
 proxysql_mysql_connect_retries_on_failure: 10
 proxysql_mysql_hostgroup_manager_verbose: 2
+proxysql_mysql_set_query_lock_on_hostgroup: False
 
 # define all MySQL servers
 proxysql_mysql_servers: []
