@@ -12,8 +12,8 @@
 
 - name: "Copy health check executable"
   copy:
-    src: files/proxysql_{{ item.health_check_type | default('galera') }}_health_check.sh
-    dest: /usr/bin/proxysql_{{ item.health_check_type | default('galera') }}_health_check
+    src: "files/proxysql_{{ item.health_check_type | default('galera') }}_health_check.sh"
+    dest: "/usr/bin/proxysql_{{ item.health_check_type | default('galera') }}_health_check"
     mode: 0755
 
 - name: "Starting systemd service"
