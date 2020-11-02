@@ -100,15 +100,15 @@ proxysql_mysql_replication_hostgroups: []
 #   reader_hostgroup: 60
 #   comment: "test repl 2"
 #
-proxysql_mysql_galera_hostgroups: 
- - writer_hostgroup: 70
-   backup_writer_hostgroup: 71
-   reader_hostgroup: 80
-   offline_hostgroup: 90
-   health_check_enabled: True
-   health_check_port: 9200
-   health_check_type: galera
-   comment: "galera cluster 1"
+proxysql_mysql_galera_hostgroups: []
+# - writer_hostgroup: 70
+#   backup_writer_hostgroup: 71
+#   reader_hostgroup: 80
+#   offline_hostgroup: 90
+#   health_check_enabled: True
+#   health_check_port: 9200
+#   health_check_type: galera
+#   comment: "galera cluster 1"
 
 # Install MySQL client and place /root/.my.cnf for easy ProxySQL administration
 proxysql_cli_install_config: True
@@ -121,7 +121,12 @@ proxysql_cli_install_client: True
 proxysql_cli_client_package: "mariadb-client"
 
 # Install proxysqlchk (This required CLI config and client to be enabled)
-proxysql_install_health_check: True
+proxysql_install_galera_health_check: True
 # Only Galera supported at the moment. The role will loop through the specified configuration 
 # and install a health check for each galera cluster specified.
 # Pull requests with other check scripts are appreciated.
+
+# Install "any host online" health check
+proxysql_install_any_host_online_health_check: True
+# What port should the "any host online" health check use
+proxysql_any_host_online_health_check_port: 9300

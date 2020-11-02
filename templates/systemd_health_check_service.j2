@@ -1,6 +1,10 @@
 [Unit]
-Description=ProxSQL health check servic
+Description=ProxSQL health check service
 
 [Service]
+{% if item.health_check_type | default('galera') == 'galera' %}
 ExecStart=-/usr/bin/proxysql_galera_health_check {{ item.writer_hostgroup }} {{ item.reader_hostgroup }} 
+{% else %}
+ExecStart=-/usr/bin/proxysql_{{ item.health_check_type ) }}_health_check
+{% endif %}
 StandardInput=socket
