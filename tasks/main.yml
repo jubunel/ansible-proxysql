@@ -91,7 +91,7 @@
   include_tasks: install-health-check.yml
   vars:
     item:
-      health_check_port: "proxysql_any_host_online_health_check_port | default(9300)"
+      health_check_port: "{{ proxysql_any_host_online_health_check_port | default(9300) }}"
       health_check_type: "any_host_online"
       
 - name: "Install work-around for issue 1254"
