@@ -67,11 +67,6 @@ http_bad_request() {
   /bin/echo -e "\r\n"
 }
 
-if [ $# -lt 2 ]; then
-    http_bad_request "Not enough arguments. Usage: $0 <writer hostgroup id> <read hostgroup id>"
-    exit 1
-fi
-
 
 #
 # Run a SQL query on the local MySQL instance.
