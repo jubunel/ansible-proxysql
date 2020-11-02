@@ -83,7 +83,7 @@
 
 - name: "Installing health check on Galera Cluster nodes"
   include_tasks: install-health-check.yml
-  when: proxysql_cli_install_client and proxysql_cli_install_config and proxysql_install_galera_health_check
+  when: proxysql_cli_install_client and proxysql_cli_install_config and proxysql_install_galera_health_check and proxysql_mysql_galera_hostgroups
   loop: "{{ proxysql_mysql_galera_hostgroups }}"
 
 - name: "Install any host online health check when not installing galera health check"
@@ -94,9 +94,6 @@
       health_check_port: "proxysql_any_host_online_health_check_port | default(9300)"
       health_check_type: "any_host_online"
       
-  block:
-    - name: "Set 
-
 - name: "Install work-around for issue 1254"
   template:
     src: templates/cron_ansible_1254_workaround.j2
