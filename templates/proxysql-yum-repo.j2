@@ -1,5 +1,5 @@
 [proxysql_repo]
 name=ProxySQL YUM repository
-baseurl=https://repo.proxysql.com/ProxySQL/{{ proxysql_repo_version }}/centos/{{ hostvars[inventory_hostname].ansible_distribution_major_version }}
+baseurl=https://repo.proxysql.com/ProxySQL/proxysql-{{ proxysql_repo_version }}/centos/{{ hostvars[inventory_hostname].ansible_distribution_major_version }}
 gpgcheck=1
 gpgkey=https://repo.proxysql.com/ProxySQL/repo_pub_key
