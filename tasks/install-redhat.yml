@@ -19,5 +19,5 @@
       - "proxysql"
     update_cache: yes
     state: latest
-    allow_downgrades: yes
+    allow_downgrade: yes
 
