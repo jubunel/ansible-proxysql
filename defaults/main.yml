@@ -1,5 +1,6 @@
 # Repository configuration
 proxysql_apt_version: '*'
+proxysql_repo_version: '2.2.x'
 
 # defaults file for proxySQL
 proxysql_cnf_path: '/etc'

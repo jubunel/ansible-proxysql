@@ -1,0 +1,16 @@
+- name: Ensure lsb-release is installed.
+  apt: name=lsb-release state=present
+
+- name: APT | Install ProxySQL key
+  apt_key:
+    url: https://repo.proxysql.com/ProxySQL/repo_pub_key
+    state: present
+
+- name: APT | Add ProxySQL repository
+  apt_repository: repo='deb https://repo.proxysql.com/ProxySQL/{{ proxysql_repo_version }}/{{ ansible_distribution_release }}/ ./' state=present
+
+- name: Install, upgrade or downgrade ProxySQL
+  apt: 
+    name: "proxysql{{ ('=' + proxysql_apt_version) if proxysql_apt_version|length > 0 }}"
+    state: "{{ 'latest' if proxysql_apt_version|length == 0 else 'present' }}"
+    force: yes # Allow downgrades

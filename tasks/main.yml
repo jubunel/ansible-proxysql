@@ -6,10 +6,6 @@
     fail_msg: "Please upgrade your group vars to the new style configuration"
 
 
-- name: Ensure lsb-release is installed.
-  apt: name=lsb-release state=present
-
-
 - name: Ensure group "proxysql" exists
   group:
     name: proxysql
@@ -30,23 +26,6 @@
     group: proxysql
 
 
-- name: APT | Install ProxySQL key
-  apt_key:
-    url: https://repo.proxysql.com/ProxySQL/repo_pub_key
-    state: present
-
-
-- name: APT | Add ProxySQL repository
-  apt_repository: repo='deb https://repo.proxysql.com/ProxySQL/proxysql-2.0.x/{{ ansible_distribution_release }}/ ./' state=present
-
-
-- name: Install, upgrade or downgrade ProxySQL
-  apt: 
-    name: "proxysql{{ ('=' + proxysql_apt_version) if proxysql_apt_version|length > 0 }}"
-    state: "{{ 'latest' if proxysql_apt_version|length == 0 else 'present' }}"
-    force: yes # Allow downgrades
-
-
 - name: Recursively change ownership of /var/lib/proxysql folder
   file:
     path: /var/lib/proxysql
@@ -55,11 +34,16 @@
     owner: proxysql
     group: proxysql
 
+- name: "ProxySQL - Install on Red Hat based systems"
+  import_tasks: install-redhat.yml
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+      
+- name: "ProxySQL - Install on Debian based systems"
+  import_tasks: install-debian.yml
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
 
 ### Configuration
-
-
 - name: Copy ProxySQL config file
   template:
     src: "{{ proxysql_template }}"
