@@ -21,3 +21,7 @@
     state: latest
     allow_downgrade: yes
 
+- name: Start ProxySQL
+  service:
+    name: proxysql
+    state: started
