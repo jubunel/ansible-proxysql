@@ -119,7 +119,8 @@ proxysql_install_1254_workaround: True
 # Install a MySQL client to be able to login to ProxySQL
 proxysql_cli_install_client: True
 # When installing a client, which flavor are we installing?
-proxysql_cli_client_package: "mariadb-client"
+proxysql_debian_cli_client_package: "mariadb-client"
+proxysql_redhat_cli_client_package: "mysql-client"
 
 # Install proxysqlchk (This required CLI config and client to be enabled)
 proxysql_install_galera_health_check: True
