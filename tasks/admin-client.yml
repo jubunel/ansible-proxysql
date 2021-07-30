@@ -1,12 +1,12 @@
 - name: "Install MySQL CLI client (debian based systems)"
   package: 
     name: "{{ proxysql_debian_cli_client_package }}"
-  when: proxysql_cli_install_client and (ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu')
+  when: proxysql_cli_install_client and ansible_os_family == 'Debian'
 
 - name: "Install MySQL CLI client (red hat based systems)"
   package: 
     name: "{{ proxysql_redhat_cli_client_package }}"
-  when: proxysql_cli_install_client and (ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux')
+  when: proxysql_cli_install_client and ansible_os_family == 'RedHat'
 
 - name: "Write configuration file"
   template:
