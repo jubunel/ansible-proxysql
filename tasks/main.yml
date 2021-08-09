@@ -83,3 +83,9 @@
     src: templates/cron_ansible_1254_workaround.j2
     dest: /etc/cron.d/ansible_1254_workaround
   when: proxysql_cli_install_config and proxysql_install_1254_workaround
+
+- name: "Remove work-around for issue 1254"
+  file:
+    path: /etc/cron.d/ansible_1254_workaround
+    state: absent
+  when: not proxysql_install_1254_workaround
