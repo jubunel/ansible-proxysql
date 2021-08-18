@@ -7,7 +7,7 @@
     state: present
 
 - name: APT | Add ProxySQL repository
-  apt_repository: repo='deb https://repo.proxysql.com/ProxySQL/{{ proxysql_repo_version }}/{{ ansible_distribution_release }}/ ./' state=present
+  apt_repository: repo='deb https://repo.proxysql.com/ProxySQL/proxysql-{{ proxysql_repo_version }}/{{ ansible_distribution_release }}/ ./' state=present
 
 - name: Install, upgrade or downgrade ProxySQL
   apt: 
