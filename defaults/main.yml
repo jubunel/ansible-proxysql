@@ -1,6 +1,7 @@
-# Repository configuration
-proxysql_apt_version: '*'
+# Repository configuration: Which major version are we installing (both APT and YUM repos)
 proxysql_repo_version: '2.2.x'
+# On Ubuntu systems, a minor version can be selected:
+proxysql_apt_version: '*'
 
 # defaults file for proxySQL
 proxysql_cnf_path: '/etc'
@@ -113,6 +114,9 @@ proxysql_mysql_galera_hostgroups: []
 
 # Install MySQL client and place /root/.my.cnf for easy ProxySQL administration
 proxysql_cli_install_config: True
+# What path to install the config file to? This feature can be used when when both
+# the database server and ProxySQL are running on the same machine.
+proxysql_cli_config_path: "/root/.my.cnf"
 # Install a cronjob that executes `LOAD MYSQL SERVERS INTO RUNTIME` every 15 minutes as a work-around for issue
 # https://github.com/sysown/proxysql/issues/1254
 proxysql_install_1254_workaround: True

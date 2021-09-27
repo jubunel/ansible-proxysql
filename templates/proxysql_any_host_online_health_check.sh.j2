@@ -72,7 +72,7 @@ http_bad_request() {
 # Run a SQL query on the local MySQL instance.
 # 
 status_query () {
-  SQL_QUERY=`/usr/bin/mysql --defaults-file=/root/.my.cnf --silent --raw -N -e "$1"`
+  SQL_QUERY=`/usr/bin/mysql --defaults-file={{ proxysql_cli_config_path | escape }} --silent --raw -N -e "$1"`
   RESULT=`echo $SQL_QUERY|/usr/bin/cut -d ' ' -f 2` # just remove the value label
   echo $RESULT
 }

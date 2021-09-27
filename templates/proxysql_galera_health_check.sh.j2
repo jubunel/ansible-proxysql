@@ -2,7 +2,7 @@
 
 # Author:: Matteo Dessalvi & Michaël de Groot
 #
-# Copyright:: 2017
+# Copyright:: 2017, 2020, 2021
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -77,7 +77,7 @@ fi
 # Run a SQL query on the local MySQL instance.
 # 
 status_query () {
-  SQL_QUERY=`/usr/bin/mysql --defaults-file=/root/.my.cnf --silent --raw -N -e "$1"`
+  SQL_QUERY=`/usr/bin/mysql --defaults-file={{ proxysql_cli_config_path | escape }} --silent --raw -N -e "$1"`
   RESULT=`echo $SQL_QUERY|/usr/bin/cut -d ' ' -f 2` # just remove the value label
   echo $RESULT
 }

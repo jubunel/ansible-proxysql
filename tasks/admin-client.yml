@@ -11,5 +11,5 @@
 - name: "Write configuration file"
   template:
     src: "root_my.cnf.j2"
-    dest: "/root/.my.cnf"
+    dest: "{{ proxysql_cli_config_path }}"
   when: proxysql_cli_install_config

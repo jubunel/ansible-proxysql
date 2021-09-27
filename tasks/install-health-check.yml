@@ -11,8 +11,8 @@
     mode: 0644
 
 - name: "Copy health check executable"
-  copy:
-    src: "files/proxysql_{{ item.health_check_type | default('galera') }}_health_check.sh"
+  template:
+    src: "templates/proxysql_{{ item.health_check_type | default('galera') }}_health_check.sh.j2"
     dest: "/usr/bin/proxysql_{{ item.health_check_type | default('galera') }}_health_check"
     mode: 0755
 
