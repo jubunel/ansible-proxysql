@@ -11,9 +11,9 @@
     mode: 0644
 
 - name: "Copy health check executable"
-  copy:
-    src: files/proxysql_galera_health_check.sh
-    dest: /usr/bin/proxysql_galera_health_check
+  template:
+    src: "templates/proxysql_{{ item.health_check_type | default('galera') }}_health_check.sh.j2"
+    dest: "/usr/bin/proxysql_{{ item.health_check_type | default('galera') }}_health_check"
     mode: 0755
 
 - name: "Starting systemd service"
@@ -22,5 +22,3 @@
     enabled: yes
     daemon_reload: yes
     state: started
-
-

@@ -67,17 +67,12 @@ http_bad_request() {
   /bin/echo -e "\r\n"
 }
 
-if [ $# -lt 2 ]; then
-    http_bad_request "Not enough arguments. Usage: $0 <writer hostgroup id> <read hostgroup id>"
-    exit 1
-fi
-
 
 #
 # Run a SQL query on the local MySQL instance.
 # 
 status_query () {
-  SQL_QUERY=`/usr/bin/mysql --defaults-file=/root/.my.cnf --silent --raw -N -e "$1"`
+  SQL_QUERY=`/usr/bin/mysql --defaults-file={{ proxysql_cli_config_path | escape }} --silent --raw -N -e "$1"`
   RESULT=`echo $SQL_QUERY|/usr/bin/cut -d ' ' -f 2` # just remove the value label
   echo $RESULT
 }
@@ -94,17 +89,11 @@ fi
 #
 # Check how many writers are online
 #
-NUM_WRITERS=$(status_query "select count(*) FROM runtime_mysql_servers WHERE status='ONLINE' AND hostgroup_id=$1;")
+NUM_ONLINE=$(status_query "select count(*) FROM runtime_mysql_servers WHERE status='ONLINE'")
 
 #
-# Check how many readers are online
-#
-NUM_READERS=$(status_query "select count(*) FROM runtime_mysql_servers WHERE status='ONLINE' AND hostgroup_id=$2;")
-
-if [ -z "$NUM_WRITERS" ] || [ "$NUM_WRITERS" = "0" ]; then
-     http_no_access "No writers online"
-elif [ -z "$NUM_READERS" ] || [ "$NUM_READERS" = "0" ]; then
-     http_no_access "No readers online"
+if [ -z "$NUM_ONLINE" ] || [ "$NUM_ONLINE" = "0" ]; then
+     http_no_access "No nodes online"
 else
-     http_ok "We have readers and writers"
+     http_ok "We have nodes online"
 fi

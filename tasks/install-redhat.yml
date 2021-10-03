@@ -1,0 +1,27 @@
+- name: "RedHat - Add MariaDB repository"
+  template:
+    src: proxysql-yum-repo.j2
+    dest: /etc/yum.repos.d/proxysql.repo
+
+- name: "RedHat - Import MariaDB RPM GPG Key"
+  rpm_key:
+    key: https://repo.proxysql.com/ProxySQL/repo_pub_key
+    state: present
+
+- name: "RedHat - Clean yum metadata"
+  command: yum clean all
+  args:
+    warn: no
+
+- name: "RedHat - Install or upgrade ProxySQL"
+  yum:
+    name: 
+      - "proxysql"
+    update_cache: yes
+    state: latest
+    allow_downgrade: yes
+
+- name: Start ProxySQL
+  service:
+    name: proxysql
+    state: started
